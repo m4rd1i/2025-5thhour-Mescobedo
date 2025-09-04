@@ -32,7 +32,7 @@ print(poopFartList)
 #8. Move the number back to the first list (like you did in #4 and #5 but reversed).
 mardiList.pop(1)
 mardiList.pop(0)
-
+numList.append(poopFartList)
 #9. Sort the first list from lowest to highest and print it.
 numList.sort()
 print(numList)

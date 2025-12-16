@@ -1,4 +1,4 @@
-#Name:
+#Name: Maricella Escobedo
 #Class: 5th Hour
 #Assignment: Semester Project 1
 
@@ -14,7 +14,7 @@ import time
 
 partyDict = {
     "LaeZel" : {
-        "HO" : 48,
+        "HP" : 48,
         "Init" : 1,
         "AC" : 17,
         "AtkMod": 6,
@@ -86,15 +86,14 @@ enemyDict = {
 #1. Rolling for 'initiative' to see who goes first. This is determined by rolling a
 #20-sided die (d20) and adding their initiative modifier (If the roll is the same,
 #assume the hero goes first).
-heroRoll = random.randint(1,20) + (partyDict["LaeZel"]["Init"])
-enemyRoll = random.randint(1,20) + (enemyDict["Mindflayer"]["Init"])
-print(heroRoll, enemyRoll)
-if heroRoll > enemyRoll:
+heroRoll = random.randint(1,20)
+enemyRoll = random.randint(1,20)
+if heroRoll >= enemyRoll:
     print("Hero goes first.")
-elif enemyRoll > heroRoll:
-    print("Enemy goes first")
+    heroRoll = True
 else:
-    print("Hero goes first.")
+    print("Enemy goes first")
+    enemyRoll = False
 
 #2. Rolling to attack. This is determined by rolling a 20-sided die (d20) and adding their
 #attack modifier. The attack hits if it matches or is higher than the target's Armor Class (AC).
@@ -103,12 +102,60 @@ else:
 #the attack automatically misses
 heroRollAttack = random.randint(1,20)
 print(heroRollAttack)
-enemyRollAttack = random.randint(1,20)
-print(enemyRollAttack)
+while partyDict["LaeZel"]["HP"] > 0 and enemyDict["Mindflayer"]["HP"] > 0:
+    if heroRoll == True:
+        print("LaeZel goes first.")
+        heroRollAttack = random.randint(1,20)
+        if heroRollAttack == 20:
+            enemyDict["Mindflayer"]["HP"] -= (partyDict["LaeZel"]["Damage"] * 2)
+            print(f"LaeZel hits Mindflayer for {(partyDict["LaeZel"]["Damage"] * 2)}")
+        elif heroRollAttack == 1:
+            print("LaeZel misses the hit on the Mindflayer.")
+        elif heroRollAttack + partyDict["LaeZel"]["AtkMod"] >= enemyDict["Mindflayer"]["AC"]:
+            enemyDict["Mindflayer"]["HP"] -= (partyDict["LaeZel"]["Damage"] + 2)
+            print(f"LaeZel hits Mindflayer for {(partyDict["LaeZel"]["Damage"])}")
+        else:
+            print("LaeZel missed their attack")
 
-if heroRollAttack == 20:
-    enemyDict["Mindflayer"]["HP"] -= (partyDict["LaeZel"]["HP"])
+        enemyRollAttack = random.randint(1, 20)
+        print(enemyRollAttack)
+        if enemyRollAttack == 20:
+            partyDict["LaeZel"]["HP"] -= (enemyDict["Mindflayer "]["Damage"] * 2)
+            print(f"Mindflayer hits LaeZel for {(enemyDict["Mindflayer"]["Damage"] * 2)}")
+        elif enemyRollAttack == 1:
+            print("Mindflayer misses the hit on the LaeZel.")
+        elif enemyRollAttack + enemyDict["Mindflayer"]["AtkMod"] >= partyDict["LaeZel"]["AC"]:
+            partyDict["LaeZel"]["HP"] -= (enemyDict["Mindflayer"]["Damage"] + 2)
+            print(f"Mindflayer hits LaeZel for {(enemyDict["Mindflayer"]["Damage"])}")
+        else:
+            print("Mindflayer missed their attack.")
 
+    else:
+        print("Mindflayer goes first")
+        enemyRollAttack = random.randint(1, 20)
+        print(enemyRollAttack)
+        if enemyRollAttack == 20:
+            partyDict["LaeZel"]["HP"] -= (enemyDict["Mindflayer"]["Damage"] * 2)
+            print(f"Mindflayer hits LaeZel for {(enemyDict["Mindflayer"]["Damage"] * 2)}")
+        elif enemyRollAttack == 1:
+            print("Mindflayer misses the hit on the LaeZel.")
+        elif enemyRollAttack + enemyDict["Mindflayer"]["AtkMod"] >= partyDict["LaeZel"]["AC"]:
+            partyDict["LaeZel"]["HP"] -= (enemyDict["Mindflayer"]["Damage"] + 2)
+            print(f"Mindflayer hits LaeZel for {(enemyDict["Mindflayer"]["Damage"])}")
+        else:
+            print("Mindflayer missed their attack.")
+
+        heroRollAttack = random.randint(1,20)
+        if heroRollAttack == 20:
+            enemyDict["Mindflayer"]["HP"] -= (partyDict["LaeZel"]["Damage"] * 2)
+            print(f"LaeZel hits Mindflayer for {(partyDict["LaeZel"]["Damage"] * 2)}")
+        elif heroRollAttack == 1:
+            print("LaeZel misses the hit on the Mindflayer.")
+        elif heroRollAttack + partyDict["LaeZel"]["AtkMod"] >= enemyDict["Mindflayer"]["AC"]:
+            enemyDict["Mindflayer"]["HP"] -= (partyDict["LaeZel"]["Damage"] + 2)
+            print(f"LaeZel hits Mindflayer for {(partyDict["LaeZel"]["Damage"])}")
+        else:
+            print("LaeZel missed their attack")
 
 #3. If the attack hits, roll damage and subtract it from the target's hit points.
 
